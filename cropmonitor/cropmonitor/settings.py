@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'planting',
     'rest_framework',
     'api',
+    'import_export',
 
 ]
 
