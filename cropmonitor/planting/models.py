@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+length = 200
 class ValueChain(models.Model):    
   id = models.AutoField(primary_key=True)
   name = models.CharField(max_length=256, null=False) 
@@ -22,27 +23,67 @@ class ValuechainVariety(models.Model):
         return str(self.name)
 
 
-class County(models.Model):    
-  id = models.AutoField(primary_key=True)
-  name = models.CharField(max_length=256, null=True) 
-  code = models.CharField(max_length=3, null=True) 
-  def __str__(self):
-        return str(self.name)
+# class County(models.Model):    
+#   id = models.AutoField(primary_key=True)
+#   name = models.CharField(max_length=256, null=True) 
+#   code = models.CharField(max_length=3, null=True) 
+#   def __str__(self):
+#         return str(self.name)
 
-class SubCounty(models.Model):    
-  id = models.AutoField(primary_key=True)
-  name = models.CharField(max_length=256, null=True) 
-  code = models.CharField(max_length=3, null=True) 
-  def __str__(self):
-        return str(self.name)
+# class SubCounty(models.Model):    
+#   id = models.AutoField(primary_key=True)
+#   name = models.CharField(max_length=256, null=True) 
+#   code = models.CharField(max_length=3, null=True) 
+#   def __str__(self):
+#         return str(self.name)
 
-class Ward(models.Model):    
-  id = models.AutoField(primary_key=True)
-  name = models.CharField(max_length=256, null=True) 
-  code = models.CharField(max_length=3, null=True) 
-  def __str__(self):
-        return str(self.name)       
+# class Ward(models.Model):    
+#   id = models.AutoField(primary_key=True)
+#   name = models.CharField(max_length=256, null=True) 
+#   code = models.CharField(max_length=3, null=True) 
+#   def __str__(self):
+#         return str(self.name)       
 
+
+class County(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
+    name = models.CharField(max_length=length, blank=True, null=True,)
+    lat = models.CharField(max_length=length, blank=True, null=True,)
+    lng = models.CharField(max_length=length, blank=True, null=True,)
+    category = models.CharField(max_length=length, blank=True, null=True,)
+    code = models.CharField(max_length=length, blank=True, null=True,)
+    loccode = models.CharField(max_length=length, blank=True, null=True,)
+
+    def __str__(self):
+        return '%s' % self.name
+
+
+class SubCounty(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
+    county_id = models.ForeignKey('County', on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=length, blank=True, null=True,)
+    lat = models.CharField(max_length=length, blank=True, null=True,)
+    lng = models.CharField(max_length=length, blank=True, null=True,)
+    category = models.CharField(max_length=length, blank=True, null=True,)
+    code = models.CharField(max_length=length, blank=True, null=True,)
+    loccode = models.CharField(max_length=length, blank=True, null=True,)
+
+    def __str__(self):
+        return '%s' % self.name
+
+
+class Ward(models.Model):
+    county_id = models.ForeignKey('County', on_delete=models.CASCADE, blank=True, null=True)
+    subcounty_id = models.ForeignKey('SubCounty', on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=length, blank=True, null=True,)
+    lat = models.CharField(max_length=length, blank=True, null=True,)
+    lng = models.CharField(max_length=length, blank=True, null=True,)
+    category = models.CharField(max_length=length, blank=True, null=True,)
+    code = models.CharField(max_length=length, blank=True, null=True,)
+    loccode = models.CharField(max_length=length, blank=True, null=True,)
+
+    def __str__(self):
+        return '%s' % self.name
 
 
 
